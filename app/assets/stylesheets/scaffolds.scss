@@ -96,6 +96,19 @@ $slab-background: rgba(255,255,255,0.6);
   }
 }
 
+.list-item {
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  &:hover {
+    transform: scale(1.01);
+  }
+  td {
+    border-bottom: 3px solid $background;
+    padding: 10px;
+    background: $slab-background;
+  }
+}
+
 .icon {
   font-size: 170%;
   //border-bottom: none;
@@ -172,10 +185,6 @@ tr {
 }
 
 td {
-  //border-bottom: 0.2em solid rgba(0,0,0,0);
-  border-bottom: 3px solid $background;
-  padding: 10px;
-  background: $slab-background;
 }
 
 @media screen and (max-width: 1024px) {

@@ -3,9 +3,9 @@ module ApplicationHelper
   def trunc text, length: 30
     return '' if text.blank?
     result = ''
-    result << %(<span data-tooltip="#{h(text)}">) if text.length > length
+    #result << %(<span data-tooltip="#{h(text)}">) if text.length > length
     result << h(text.truncate(length))
-    result << "</span>" if text.length > length
+    #result << "</span>" if text.length > length
     result.html_safe
   end
 end

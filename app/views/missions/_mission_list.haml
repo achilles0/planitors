@@ -1,24 +1,23 @@
 %table
   %thead
     %tr
-      %th 
-      %th 
+      %th
+      %th
       %th.extra_column
-      %th 
-      %th 
-      %th 
-      %th 
-      %th 
+      %th
+      %th
+      %th
+      %th
       %th
       %th
 
   %tbody
     - @missions.each do |mission|
-      %tr{ data: { href: mission_url(mission) } }
+      %tr{ data: { href: mission.is_a?(AcceptedMission) ? mission_url(mission.mission) : mission_url(mission) }, class: 'list-item' }
         %td.icon= mission.icon && Emoji.find_by_alias(mission.icon) && Emoji.find_by_alias(mission.icon).raw
         %td= mission.name
         %td.extra_column= trunc(mission.text)
-        %td 
+        %td
           %span.co2-icon= Emoji.find_by_alias('white_check_mark').raw
           = mission.co2
           CO2
@@ -26,7 +25,8 @@
         %td= mission.category
         %td= mission.difficulty
         %td= mission.duration
-        %td= link_to 'Show', mission.is_a?(AcceptedMission) ? mission_url(mission.mission) : mission_url(mission)
+        -#%td= link_to 'Edit', mission.is_a?(AcceptedMission) ? edit_mission_url(mission.mission) : edit_mission_url(mission)
+        -#%td= link_to 'Show', mission.is_a?(AcceptedMission) ? mission_url(mission.mission) : mission_url(mission)
         %td
           - if mission.is_a?(AcceptedMission)
             - unless mission.finished?
