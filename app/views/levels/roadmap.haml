@@ -1,0 +1,11 @@
+%h1 Levels
+
+%ul.roadmap
+  - for level in @levels
+    %li.level
+      %span.icon= level.icon && Emoji.find_by_alias(level.icon) && Emoji.find_by_alias(level.icon).raw
+      = level
+      .box{ class: "level-#{level.id}" }
+        .wrapper{ data: { href: missions_url(level: level.id) } }
+          - for mission in level.missions
+            %span.mission-icon.icon{ class: ('finished' if mission.finished_by_user(current_user) ) }= Emoji.find_by_alias('star').raw

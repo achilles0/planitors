@@ -1,0 +1,22 @@
+%h1 Highscore
+
+%table
+  %thead
+    %tr
+      %th 
+      %th
+      %th
+      %th
+
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= image_tag(user.image) if user.image
+        %td= user.name
+        %td 
+          %span.co2-icon= Emoji.find_by_alias('white_check_mark').raw
+          = user.co2_result
+          CO2
+        %td
+          = Emoji.find_by_alias(user.level.icon).raw
+          = user.level.name

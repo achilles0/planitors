@@ -1,0 +1,35 @@
+%table
+  %thead
+    %tr
+      %th 
+      %th 
+      %th.extra_column
+      %th 
+      %th 
+      %th 
+      %th 
+      %th 
+      %th
+      %th
+
+  %tbody
+    - @missions.each do |mission|
+      %tr{ data: { href: mission_url(mission) } }
+        %td.icon= mission.icon && Emoji.find_by_alias(mission.icon) && Emoji.find_by_alias(mission.icon).raw
+        %td= mission.name
+        %td.extra_column= trunc(mission.text)
+        %td 
+          %span.co2-icon= Emoji.find_by_alias('white_check_mark').raw
+          = mission.co2
+          CO2
+        %td= mission.continuous? ? Emoji.find_by_alias('recycle').raw + ' YES' : ''
+        %td= mission.category
+        %td= mission.difficulty
+        %td= mission.duration
+        %td= link_to 'Show', mission.is_a?(AcceptedMission) ? mission_url(mission.mission) : mission_url(mission)
+        %td
+          - if mission.is_a?(AcceptedMission)
+            - unless mission.finished?
+              = link_to 'Finish!', accepted_mission_url(id: mission.id, accepted_mission: { finished: true }), method: :put
+          - else
+            = link_to 'Accept!', accepted_missions_url(accepted_mission: { mission_id: mission }), method: :post

@@ -1,0 +1,73 @@
+// Place all the styles related to the Levels controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// This shouldn't be redefined here of course. Have to work out the loading order or whatever it is
+$slab-background: rgba(255,255,255,0.2);
+
+body.levels {
+	background: #666;
+}
+
+ul.roadmap {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+li.level {
+	float: left;
+	width: 32%;
+	margin-right: 1.5em;
+	margin-bottom: 1em;
+	.box, .box .wrapper {
+		border-radius: 1em;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	.box .wrapper {
+		//background: $slab-background;
+		margin-top: 0.5em;
+		padding: 1em;
+		border: 2px solid white;
+		height: 10em;
+		//padding-bottom: 70%;
+	}
+	.box:hover .wrapper {
+		background: $slab-background;
+		cursor: pointer;
+	}
+}
+
+.mission-icon {
+	opacity: 0.5;
+	&.finished {
+		opacity: 1;
+	}
+}
+
+.level-1 {
+	// Search for 'pollution'
+	// http://www.istockphoto.com/se/photo/brown-layer-of-los-angeles-smog-gm94146417-2743134
+	background-image: asset-data-url('smog-city-istock');
+}
+.level-2 {
+	// Search for 'seedling'
+	// http://www.istockphoto.com/se/photo/spring-bud-growing-gm514459278-88107633
+	background-image: asset-data-url('seedling-istock');
+}
+.level-3 {
+	// Search for 'carbon neutral'
+	// http://www.istockphoto.com/se/photo/concept-of-success-in-a-natural-setting-gm537396306-95268821
+	background-image: asset-data-url('carbon-neutral-istock');
+}
+.level-4 {
+	// Search for 'contribute'
+	// http://www.istockphoto.com/se/photo/abstract-network-connection-background-gm509731276-85945821
+	background-image: asset-data-url('network-istock');
+}
+.level-5 {
+	// Search for 'carbon neutral'
+	// http://www.istockphoto.com/se/photo/clean-green-planet-environment-concept-gm473558826-64060215
+	background-image: asset-data-url('planitor-istock');
+}

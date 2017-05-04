@@ -1,0 +1,20 @@
+%p#notice= notice
+
+.mission
+  %h1= @mission.name
+  %p= @mission.text
+  %p
+    %b Co2:
+    = @mission.co2
+    %b Continuous:
+    = @mission.continuous
+    %b Category:
+    = @mission.category
+    %b Difficulty:
+    = @mission.difficulty
+    %b Duration:
+    = @mission.duration
+
+  = link_to 'Edit', edit_mission_path(@mission)
+  \|
+  = link_to 'Back', missions_path

@@ -1,0 +1,18 @@
+// Place all the styles related to the missions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// This shouldn't be redefined here of course. Have to work out the loading order or whatever it is
+$slab-background: rgba(255,255,255,0.4);
+
+.mission {
+	background: $slab-background;
+	padding: 2em;
+	border-radius: 1em;
+	border: 2px solid white;
+	color: black;
+
+	p, td {
+		color: black;
+	}
+}

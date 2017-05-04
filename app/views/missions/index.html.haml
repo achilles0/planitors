@@ -1,0 +1,7 @@
+%h1= chosen_level
+
+= render partial: 'mission_list', locals: { missions: @missions }
+
+%br
+
+= link_to 'New Mission', new_mission_path

@@ -1,0 +1,60 @@
+!!!
+%html
+  %head
+    %title Co2buddy
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  %body{ class: [controller_name, "level-#{chosen_level.id}"] }
+    #menu-bar
+      = link_to missions_url, class: ('active' if current_page?(missions_url)) do
+        %span.icon= Emoji.find_by_alias('rocket').raw
+        %span Missions
+
+      = link_to accepted_missions_url, class: ('active' if current_page?(accepted_missions_url)) do
+        %span.icon= Emoji.find_by_alias('star').raw
+        %span Accepted missions
+
+      = link_to highscore_url, class: ('active' if current_page?(highscore_url)) do
+        %span.icon= Emoji.find_by_alias('star2').raw
+        %span Highscore
+
+      -# link_to levels_url, class: ('active' if current_page?(levels_url)) do
+        %span.icon= Emoji.find_by_alias('video_game').raw
+        %span Levels
+
+      = link_to roadmap_url, class: ('active' if current_page?(roadmap_url)) do
+        %span.icon= Emoji.find_by_alias('video_game').raw
+        %span Levels
+
+      - if current_user
+        = link_to destroy_user_session_url, method: :delete do
+          %span.icon= Emoji.find_by_alias('door').raw
+          %span Sign out
+
+    %p.notice= notice
+    %p.alert= alert
+    = yield
+    - if current_user && controller_name['missions']
+      #carbon-budget
+        .level-progress
+          Level progress:
+          = "#{current_user.progress(lvl: chosen_level, percentage: true)}%"
+          .meter
+            %span{ style: "width: #{current_user.progress(lvl: chosen_level, percentage: true)}%" }
+          Daily CO2 budget:
+          = current_user.co2_result
+          kg / day above budget
+          .meter
+            %span{ style: "width: #{current_user.co2_budget(percentage: true)}%" }
+            %span.orange.second{ style: "left: #{current_user.co2_budget(percentage: true) + 0.5}%; width: #{current_user.co2_result(percentage: true)}%" }
+        -#
+          .budget-numbers
+            = current_user.co2_result
+            .budget-numbers-explanation
+              ton CO2
+              above budget
+          = image_tag current_user.image
+          = current_user.name
+          = link_to Emoji.find_by_alias('door').raw + ' Sign out', destroy_user_session_url, method: :delete
+      #budget-spacer
