@@ -17,7 +17,7 @@ class MissionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create mission" do
     assert_difference('Mission.count') do
-      post missions_url, params: { mission: { category_id: @mission.category_id, co2: @mission.co2, continuous: @mission.continuous, difficulty: @mission.difficulty, difficulty: @mission.difficulty, duration: @mission.duration, name: @mission.name, text: @mission.text } }
+      post missions_url, params: { mission: { category_id: @mission.category_id, co2: @mission.co2, continuous: @mission.continuous, difficulty: @mission.difficulty, duration: @mission.duration, name: @mission.name, text: @mission.text } }
     end
 
     assert_redirected_to mission_url(Mission.last)
@@ -34,7 +34,7 @@ class MissionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update mission" do
-    patch mission_url(@mission), params: { mission: { category_id: @mission.category_id, co2: @mission.co2, continuous: @mission.continuous, difficulty: @mission.difficulty, difficulty: @mission.difficulty, duration: @mission.duration, name: @mission.name, text: @mission.text } }
+    patch mission_url(@mission), params: { mission: { category_id: @mission.category_id, co2: @mission.co2, continuous: @mission.continuous, difficulty: @mission.difficulty, duration: @mission.duration, name: @mission.name, text: @mission.text } }
     assert_redirected_to mission_url(@mission)
   end
 
