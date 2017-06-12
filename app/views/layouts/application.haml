@@ -1,12 +1,16 @@
 !!!
 %html
   %head
-    %title Co2buddy
+    %title #1planet
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body{ class: [controller_name, "level-#{chosen_level.id}"] }
     #menu-bar
+      = link_to newsitems_url, class: ('active' if current_page?(newsitems_url)) do
+        %span.icon= Emoji.find_by_alias('eyes').raw
+        %span News
+
       = link_to missions_url, class: ('active' if current_page?(missions_url)) do
         %span.icon= Emoji.find_by_alias('rocket').raw
         %span Missions

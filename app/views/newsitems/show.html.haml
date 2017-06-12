@@ -1,0 +1,9 @@
+%p#notice= notice
+
+.newsitem
+  %h1= @newsitem.name
+  %p= @newsitem.text
+
+  = link_to 'Edit', edit_newsitem_path(@newsitem)
+  \|
+  = link_to 'Back', newsitems_path

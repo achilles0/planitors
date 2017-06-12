@@ -1,0 +1,7 @@
+%h1= chosen_level
+
+= render partial: 'newsitem_list', locals: { newsitems: @newsitems }
+
+%br
+
+= link_to 'New Newsitem', new_newsitem_path
