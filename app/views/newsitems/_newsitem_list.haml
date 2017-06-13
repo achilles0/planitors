@@ -4,6 +4,7 @@
       %th
       %th
       %th.extra_column
+      %th
 
   %tbody
     - @newsitems.each do |newsitem|
@@ -11,3 +12,4 @@
         %td.icon= newsitem.icon && Emoji.find_by_alias(newsitem.icon) && Emoji.find_by_alias(newsitem.icon).raw
         %td= newsitem.name
         %td.extra_column= trunc(newsitem.text)
+        %td= distance_of_time_in_words(newsitem.created_at,Time.zone.now) + " ago"

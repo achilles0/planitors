@@ -4,7 +4,7 @@ class NewsitemsController < ApplicationController
   # GET /newsitems
   # GET /newsitems.json
   def index
-    @newsitems = Newsitem.all.where(level: chosen_level)
+    @newsitems = Newsitem.all.where(level: chosen_level).sort_by{ |obj| obj.created_at }.reverse
   end
 
   # GET /newsitems/1
