@@ -1,9 +1,11 @@
 class NewsitemsController < ApplicationController
   before_action :set_newsitem, only: [:show, :edit, :update, :destroy]
 
+
   # GET /newsitems
   # GET /newsitems.json
   def index
+    logger.debug "::: Newsitem index running"
     @newsitems = Newsitem.all.where(level: chosen_level).sort_by{ |obj| obj.created_at }.reverse
   end
 
@@ -25,6 +27,7 @@ class NewsitemsController < ApplicationController
   # POST /newsitems.json
   def create
     @newsitem = Newsitem.new(newsitem_params)
+    @newsitem.liked_by @user
 
     respond_to do |format|
       if @newsitem.save
@@ -59,6 +62,22 @@ class NewsitemsController < ApplicationController
       format.html { redirect_to newsitem_url, notice: 'Newsitem was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def upvote 
+    logger.debug "::: Upvote running"
+    @newsitem = Newsitem.find(params[:id])
+    @newsitem.upvote_by current_user
+    logger.debug "Upvote: #{@newsitem} user=#{current_user}"
+    redirect_to :back
+  end  
+
+  def downvote
+    logger.debug "::: Downvote running"
+    @newsitem = Newsitem.find(params[:id])
+    @newsitem.downvote_by current_user
+    logger.debug "Downvote: #{@newsitem} user=#{current_user}"
+    redirect_to :back
   end
 
   private
