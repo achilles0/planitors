@@ -15,5 +15,22 @@
   .field
     = f.label :text
     = f.text_area :text
+  .field
+    = f.label :tags
+    = f.text_field :tags
+  .field
+    = f.date_field :bestbefore, class: "form-control datepicker", placeholder: "Best Before Date"
+  .field
+    = f.label :relevancedays
+    = f.number_field :relevancedays
+  .field
+    = f.label :links
+    = f.text_area :links
+  %br/
   .actions
     = f.submit 'Save'
+
+:javascript
+  $('.datepicker').pickadate({
+    selectMonths: true
+  });
