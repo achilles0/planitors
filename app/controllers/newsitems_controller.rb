@@ -88,6 +88,6 @@ class NewsitemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def newsitem_params
-      params.require(:newsitem).permit(:icon, :name, :text, :level_id)
+      params.require(:newsitem).permit(:icon, :name, :text, :level_id, :tags, :bestbefore, :relevancedays, :links)
     end
 end
