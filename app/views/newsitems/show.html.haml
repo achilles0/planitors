@@ -3,6 +3,8 @@
 .newsitem
   %h1= @newsitem.name
   %p= @newsitem.text
+  %h2= link_to 'Read full article', @newsitem.links
+  %hr
 
   = link_to 'Edit', edit_newsitem_path(@newsitem)
   \|
