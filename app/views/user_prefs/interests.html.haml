@@ -1,0 +1,13 @@
+%h1 Editing User Interests
+
+%ul.interests
+  - for tag in @tags
+    %li.interest
+      %span.icon= tag.icon && Emoji.find_by_alias(tag.icon) && Emoji.find_by_alias(tag.icon).raw
+      = tag.name
+      .box{ class: "tag-#{tag.id}" }
+        %span.icon{ class: ('finished') }= Emoji.find_by_alias('star').raw  
+        %br/
+  .actions
+    %p f.submit 'Save'
+  %hr

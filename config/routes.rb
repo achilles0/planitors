@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'user_prefs/interests'
+
+  resources :tags
   resources :levels
 
   get '/roadmap', to: 'levels#roadmap'

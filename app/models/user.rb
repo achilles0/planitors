@@ -8,6 +8,7 @@ class User < ApplicationRecord
   belongs_to :level
 
   has_many :accepted_missions
+  has_many :tags, through: :user_interests
 
   has_many :missions, through: :accepted_missions do
     def available

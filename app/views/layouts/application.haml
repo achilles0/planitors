@@ -32,6 +32,11 @@
         %span Levels
 
       - if current_user
+        = link_to user_prefs_interests_url do
+          %span.icon= Emoji.find_by_alias('ballot_box_with_check').raw
+          %span Interests
+
+      - if current_user
         = link_to destroy_user_session_url, method: :delete do
           %span.icon= Emoji.find_by_alias('door').raw
           %span Sign out
