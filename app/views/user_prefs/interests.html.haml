@@ -1,13 +1,25 @@
-%h1 Editing User Interests
+%h1 Editing User Interests for #{current_user.name ? current_user.name : current_user.email}
 
-%ul.interests
+-#  %hr
+-#  %span.icon{ class: ('finished') }= Emoji.find_by_alias('star').raw
+
+-#  javascript
+-#    function updateInterest(delta)
+-#    {
+-#      document.getElementById('delta').value=delta
+-#      document.forms[0].submit()
+-#    }
+
+%table.interests
   - for tag in @tags
-    %li.interest
-      %span.icon= tag.icon && Emoji.find_by_alias(tag.icon) && Emoji.find_by_alias(tag.icon).raw
-      = tag.name
-      .box{ class: "tag-#{tag.id}" }
-        %span.icon{ class: ('finished') }= Emoji.find_by_alias('star').raw  
-        %br/
-  .actions
-    %p f.submit 'Save'
-  %hr
+    %tr.interest
+      %td.icon
+        %span.icon= tag.icon && Emoji.find_by_alias(tag.icon) && Emoji.find_by_alias(tag.icon).raw
+      %td.name
+        %span.name= tag.name
+      %td.buttons
+        = form_for :user, url: { action: "update_interest" } do |f|
+          = f.hidden_field :tag,  id: "tag",  value: "tag-#{tag.name}"
+          = f.hidden_field :user, id: "user", value: "#{@user}"
+          = f.button "+", type: "submit", value: "+" 
+          = f.button "-", type: "submit", value: "-" 

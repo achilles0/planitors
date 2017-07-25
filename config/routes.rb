@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'user_prefs/interests'
+  post 'user_prefs/update_interest'
 
   resources :tags
   resources :levels
