@@ -55,3 +55,5 @@ Mission.create(level: level3, category: other, icon: 'money_with_wings', name: '
 #User.create(email: 'jonathan@imagineit.se', password: 'hurlumhej', password_confirmation: 'hurlumhej')
 
 Newsitem.create(level: level1, icon: 'money_with_wings', name: 'Nordea divesterar från Keystone XL', text:'Nordea har efter hårda påtryckningar från klimatrörelsen till slut bestämt sig för att divestera från Keystoen XL projektet. Ett omstritt projekt att bygga en pipeline från oljesandsfälten i Kanada.')
+
+User_interests.create(id: 1, tag_id: 1, weight: 50)
