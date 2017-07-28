@@ -7,7 +7,7 @@ class Newsitem < ApplicationRecord
     "Newsitem #{id} - #{name}"
   end
 
-  def get_interest_score
+  def get_interest_score(userid)
 
   	# Interest score is computed as the sum of the following:
   	# age : -inf .. 100, where 100 is age 0, 90 is a day old, 60, a week old, 0 three months old
@@ -17,8 +17,7 @@ class Newsitem < ApplicationRecord
   	# positive scores are more interesting, but returned as negated for sorting
   	# 
   	puts "==================================================================="
-  	puts "Get interest score for post #{id}, #{name}:"
-  	user = 3 # TODO
+  	puts "Get interest score for user #{userid} post #{id}, #{name}:"
 
   	# age
   	# 200/math.log10(10.0+float(x)/day)-100
@@ -64,7 +63,7 @@ class Newsitem < ApplicationRecord
   	taglist.each do |tag_name|
   	  tag = Tag.find_by(name: tag_name)
   	  if tag then
-        interest = UserInterest.find_by(id: user*1000+tag.id)
+        interest = UserInterest.find_by(id: userid*1000+tag.id)
   	    if interest then 
   	  	  puts "Tag #{tag_name} score: #{10*interest.weight}"
   	  	  tag_score += 10*interest.weight

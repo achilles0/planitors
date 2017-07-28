@@ -8,7 +8,7 @@
       %th
 
   %tbody
-    - @newsitems.sort_by { |newsitem| newsitem.get_interest_score }.each do |newsitem|
+    - @newsitems.sort_by { |newsitem| newsitem.get_interest_score(current_user.id) }.each do |newsitem|
       %tr{ data: { href: newsitem_url(newsitem) }, class: 'list-item' }
         %td.icon= newsitem.icon && Emoji.find_by_alias(newsitem.icon) && Emoji.find_by_alias(newsitem.icon).raw
         %td= newsitem.name
