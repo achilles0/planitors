@@ -12,6 +12,8 @@ class NewsitemsController < ApplicationController
   # GET /newsitems/1
   # GET /newsitems/1.json
   def show
+    puts "=== SHOWING NEWSITEM #{@newsitem.id} - #{@newsitem.name}"
+    @newsitem.read_by_user!(current_user.id)
   end
 
   # GET /newsitems/new

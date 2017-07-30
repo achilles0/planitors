@@ -1,4 +1,5 @@
 $background: #F7F7EC;
+$gray-background: #AAAACC;
 $dark-background: #000;
 //$dark-background: #E6E2CC;
 $dark-foreground: #000;
@@ -106,6 +107,19 @@ $slab-background: rgba(255,255,255,0.6);
     border-bottom: 3px solid $background;
     padding: 10px;
     background: $slab-background;
+  }
+}
+
+.read-list-item {
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  &:hover {
+    transform: scale(1.01);
+  }
+  td {
+    border-bottom: 3px solid $background;
+    padding: 10px;
+    background: $gray-background;
   }
 }
 

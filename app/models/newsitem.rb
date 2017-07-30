@@ -14,7 +14,7 @@ class Newsitem < ApplicationRecord
   	# vote ratio : -100 .. +100 for all down/up votes
   	# vote count : 0 .. 100, where 50 is for 20 votes, 100 for inf votes
   	# interest tags : -100 .. +100 per tag
-  	# positive scores are more interesting, but returned as negated for sorting
+  	# positive scores are more interesting
   	# 
   	puts "==================================================================="
   	puts "Get interest score for user #{userid} post #{id}, #{name}:"
@@ -80,6 +80,29 @@ class Newsitem < ApplicationRecord
   	score = age_score + vote_ratio_score + vote_count_score + tag_score
 
   	puts "Total score: #{score}"
-  	-score
+  	score
+  end
+
+  def is_read_by_user?(userid)
+    readnewsitems = User.find_by(id: userid).readnewsitems
+    puts "+++ User #{userid} has read #{readnewsitems}"
+    if readnewsitems and readnewsitems.include?(":#{id}:") then 
+      puts "+++ Newsitem #{id} is read by user #{userid}"
+      return true 
+    end
+    puts "+++ Newsitem #{id} is NOT read by user #{userid}"
+    return false
+  end
+
+  def read_by_user!(userid)
+  	user = User.find_by(id: userid)
+  	if user.readnewsitems then
+  	  if not user.readnewsitems.include?(":#{id}:") then
+        user.readnewsitems += "#{id}:"
+      end
+  	else
+      user.readnewsitems = ":#{id}:"
+  	end
+    user.save!
   end
 end
