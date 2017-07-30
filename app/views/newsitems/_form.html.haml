@@ -19,14 +19,16 @@
   .field
     = f.label :tags
     = f.text_field :tags, :style=> 'width: 50%'
+    = f.label :known_tags, "Currently known tags: #{@newsitem.get_known_tags}"
+  -#.field
+  -#  = f.label :bestbefore, "Best before date"
+  -#  = f.date_field :bestbefore, class: "form-control datepicker", placeholder: "Best Before Date"
+  -#.field
+  -#  = f.label :relevancedays
+  -#  = f.number_field :relevancedays, :style=> 'width: 4cm'
   .field
-    = f.date_field :bestbefore, class: "form-control datepicker", placeholder: "Best Before Date"
-  .field
-    = f.label :relevancedays
-    = f.number_field :relevancedays, :style=> 'width: 4cm'
-  .field
-    = f.label :links
-    = f.text_area :links, :style=> 'width: 100%; height: 3cm'
+    = f.label :links, "Link to content, if any"
+    = f.text_area :links, :style=> 'width: 100%'
   %br/
   .actions
     = f.submit 'Save'

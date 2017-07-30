@@ -17,6 +17,8 @@
         %span.icon= tag.icon && Emoji.find_by_alias(tag.icon) && Emoji.find_by_alias(tag.icon).raw
       %td.name
         %span.name= tag.name
+      %td.description
+        %span.name= tag.description
       %td.interest
         %span.interest= UserInterest.where(["id BETWEEN ? AND ?", current_user.id*1000, current_user.id*1000+999]).exists?(tag_id: tag.id) ? UserInterest.where(["id BETWEEN ? AND ?", current_user.id*1000, current_user.id*1000+999]).find_by({tag_id: tag.id}).weight : 0
       %td.buttons

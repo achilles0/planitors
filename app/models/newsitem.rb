@@ -105,4 +105,8 @@ class Newsitem < ApplicationRecord
   	end
     user.save!
   end
+
+  def get_known_tags
+  	Tag.all.collect { |tag| tag.name }.join(" ")
+  end
 end
