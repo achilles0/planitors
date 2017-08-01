@@ -29,6 +29,8 @@ class NewsitemsController < ApplicationController
   # POST /newsitems.json
   def create
     @newsitem = Newsitem.new(newsitem_params)
+    puts "Created by user #{current_user.id}"
+    @newsitem.created_by = current_user.id
     @newsitem.liked_by @user
 
     respond_to do |format|
