@@ -63,4 +63,18 @@ class User < ApplicationRecord
       # user.skip_confirmation!
     end
   end
+
+  def streak?
+    # select created_at from newsitems where created_by=3 order by created_at desc limit 1;
+    last_newsitem = Newsitem.find_by_sql [
+        "select created_at from newsitems where created_by=? order by created_at desc limit 1", self.id]
+    if last_newsitem.count < 1 then return 0 end
+    last_post_date = last_newsitem.first.created_at
+    time_diff_in_days = (last_post_date - DateTime.now) / -86400
+    streak = 20
+    if time_diff_in_days <  1 then streak += self.streak_d ? self.streak_d : 4 end
+    if time_diff_in_days <  7 then streak += self.streak_w ? self.streak_w : 2 end
+    if time_diff_in_days < 31 then streak += self.streak_m ? self.streak_m : 1 end
+    return streak
+  end
 end
