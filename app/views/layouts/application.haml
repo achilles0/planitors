@@ -7,6 +7,9 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body{ class: [controller_name, "level-#{chosen_level.id}"] }
     #menu-bar
+      - if current_user
+        %span.user #{current_user.name ? current_user.name : current_user.email} &mdash; Score #{current_user.post_score} + #{current_user.streak?} = #{current_user.post_score + current_user.streak?} &mdash; Streak #{current_user.streak_m}/#{current_user.streak_w}/#{current_user.streak_d}
+      %br
       = link_to newsitems_url, class: ('active' if current_page?(newsitems_url)) do
         %span.icon= Emoji.find_by_alias('eyes').raw
         %span News
