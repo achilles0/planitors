@@ -120,16 +120,30 @@ class NewsitemsController < ApplicationController
     logger.debug "::: Upvote running"
     @newsitem = Newsitem.find(params[:id])
     @newsitem.upvote_by current_user
+    update_poster_score +1 # call after casting vote
     logger.debug "Upvote: #{@newsitem} user=#{current_user}"
     redirect_to :back
-  end  
+  end
 
   def downvote
     logger.debug "::: Downvote running"
     @newsitem = Newsitem.find(params[:id])
+    update_poster_score -1 # call before casting vote
     @newsitem.downvote_by current_user
     logger.debug "Downvote: #{@newsitem} user=#{current_user}"
     redirect_to :back
+  end
+
+  def update_poster_score delta
+    if not @newsitem.created_by then return end
+    poster = User.find(@newsitem.created_by)
+    if not poster then return end
+    up_votes = @newsitem.get_up_votes.size
+    if [2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768].include?(up_votes) then
+      # At these vote counts, award a point to poster (or remove if an upvote is withdrawn and makes it pass this point)
+      poster.post_score += delta
+      poster.save
+    end
   end
 
   private
