@@ -8,7 +8,8 @@
   %body{ class: [controller_name, "level-#{chosen_level.id}"] }
     #menu-bar
       - if current_user
-        %span.user #{current_user.name ? current_user.name : current_user.email} &mdash; Score #{current_user.post_score ? current_user.post_score + current_user.streak? : 0} (#{current_user.post_score} + #{current_user.streak?}) &mdash; Streak #{current_user.streak_m ? current_user.streak_m : 0}/#{current_user.streak_w ? current_user.streak_w : 0}/#{current_user.streak_d ? current_user.streak_d : 0}
+      - streak = current_user.streak?
+        %span.user #1planet &mdash; #{current_user.name ? current_user.name : current_user.email} &mdash; Score #{current_user.post_score ? current_user.post_score + streak['total'] : 0} (#{current_user.post_score ? current_user.post_score : 0} + #{streak['total']}) &mdash; Streak #{streak["month"]}/#{streak["week"]}/#{streak["day"]}
       %br
       = link_to newsitems_url, class: ('active' if current_page?(newsitems_url)) do
         %span.icon= Emoji.find_by_alias('eyes').raw

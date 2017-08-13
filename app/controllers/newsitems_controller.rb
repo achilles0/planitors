@@ -40,12 +40,11 @@ class NewsitemsController < ApplicationController
         "select created_at from newsitems where created_by=? order by created_at desc limit 1", current_user.id]
     if last_newsitem.count >= 1 then 
       last_post_date = Time.at(last_newsitem.first.created_at).to_date
-      today = Date.today
 
       # Day streak
-      if last_post_date == today then
+      if NewsitemsController.is_today? last_post_date then
         # Day streak preserved, already posted today
-      elsif last_post_date == today - 1 then
+      elsif NewsitemsController.is_yesterday? last_post_date then
         # Day streak preserved, this is the first post today
         current_user.streak_d = current_user.streak_d ? current_user.streak_d + 1 : 1
       else
@@ -54,10 +53,9 @@ class NewsitemsController < ApplicationController
       end
 
       # Week streak
-      if last_post_date.cweek == today.cweek and last_post_date.year == today.year then
+      if NewsitemsController.is_this_week? last_post_date then
         # Week streak preserved, already posted this week
-      elsif last_post_date.cweek == today.cweek - 1 or (last_post_date.cweek >= 52 and today.cweek == 1) then
-        # FIXME: Check years also
+      elsif NewsitemsController.is_last_week? last_post_date then
         # Week streak preserved, this is the first post this week
         current_user.streak_w = current_user.streak_w ? current_user.streak_w + 1 : 1
       else
@@ -66,10 +64,9 @@ class NewsitemsController < ApplicationController
       end
 
       # Month streak
-      if last_post_date.mon == today.mon and last_post_date.year == today.year then
+      if NewsitemsController.is_this_month? last_post_date then
         # Month streak preserved, already posted this month
-      elsif last_post_date.mon == today.mon - 1 or (last_post_date.mon == 12 and today.mon == 1) then
-        # FIXME: Check years also
+      elsif NewsitemsController.is_last_month? last_post_date then
         # Month streak preserved, this is the first post this month
         current_user.streak_m = current_user.streak_m ? current_user.streak_m + 1 : 1
       else
@@ -120,7 +117,9 @@ class NewsitemsController < ApplicationController
     logger.debug "::: Upvote running"
     @newsitem = Newsitem.find(params[:id])
     @newsitem.upvote_by current_user
-    update_poster_score +1 # call after casting vote
+    if @newsitem.vote_registered? then
+      update_poster_score 0
+    end
     logger.debug "Upvote: #{@newsitem} user=#{current_user}"
     redirect_to :back
   end
@@ -128,20 +127,43 @@ class NewsitemsController < ApplicationController
   def downvote
     logger.debug "::: Downvote running"
     @newsitem = Newsitem.find(params[:id])
-    update_poster_score -1 # call before casting vote
     @newsitem.downvote_by current_user
+    if @newsitem.vote_registered? then
+      update_poster_score -1
+    end
     logger.debug "Downvote: #{@newsitem} user=#{current_user}"
     redirect_to :back
   end
 
+  def self.is_today? qdate
+    (qdate == Date.today)
+  end
+  def self.is_yesterday? qdate
+    (qdate == Date.today - 1)
+  end
+  def self.is_this_week? qdate
+    (qdate.cweek == Date.today.cweek and qdate.year == Date.today.year)
+  end
+  def self.is_last_week? qdate
+    (qdate.cweek == Date.today.cweek - 1 and qdate.year == Date.today.year) or (qdate.cweek >= 52 and Date.today.cweek == 1 and qdate.year == Date.today.year - 1)
+  end
+  def self.is_this_month? qdate
+    (qdate.mon == Date.today.mon and qdate.year == Date.today.year)
+  end
+  def self.is_last_month? qdate
+    (qdate.mon == Date.today.mon - 1) or (qdate.mon == 12 and today.mon == 1 and qdate.year == Date.today.year - 1)
+  end
+
   def update_poster_score delta
+    # delta is 0 for upvote, -1 for downvote
     if not @newsitem.created_by then return end
     poster = User.find(@newsitem.created_by)
     if not poster then return end
     up_votes = @newsitem.get_up_votes.size
-    if [2,4,8,16,32,64,128,256,512,1024,2048,4096,8192,16384,32768].include?(up_votes) then
-      # At these vote counts, award a point to poster (or remove if an upvote is withdrawn and makes it pass this point)
-      poster.post_score += delta
+    if not up_votes then return end
+    if [2,4,8,16,32,64].include?(up_votes-delta) or (up_votes-delta) % 100 == 0 then
+      # At these vote counts, or at every 100 votes, award a point to poster (or remove if an upvote is withdrawn and makes it go below this score)
+      poster.post_score += 1 + 2*delta
       poster.save
     end
   end
