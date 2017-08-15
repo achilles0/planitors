@@ -69,16 +69,17 @@ class User < ApplicationRecord
     day_streak = week_streak = month_streak = 0
     last_newsitem = Newsitem.find_by_sql [
         "select created_at from newsitems where created_by=? order by created_at desc limit 1", self.id]
-    if last_newsitem.count < 1 then return 0 end
-    last_post_date = Time.at(last_newsitem.first.created_at).to_date
-    if NewsitemsController.is_today? last_post_date or NewsitemsController.is_yesterday? last_post_date then 
-      day_streak += streak_d ? streak_d : 0
-    end
-    if NewsitemsController.is_this_week? last_post_date or NewsitemsController.is_last_week? last_post_date then 
-      week_streak += streak_w ? streak_w : 0
-    end
-    if NewsitemsController.is_this_month? last_post_date or NewsitemsController.is_last_month? last_post_date then 
-      month_streak += streak_m ? streak_m : 0 
+    if last_newsitem.count >= 1 then
+      last_post_date = Time.at(last_newsitem.first.created_at).to_date
+      if NewsitemsController.is_today? last_post_date or NewsitemsController.is_yesterday? last_post_date then 
+        day_streak = streak_d ? streak_d : 0
+      end
+      if NewsitemsController.is_this_week? last_post_date or NewsitemsController.is_last_week? last_post_date then 
+        week_streak = streak_w ? streak_w : 0
+      end
+      if NewsitemsController.is_this_month? last_post_date or NewsitemsController.is_last_month? last_post_date then 
+        month_streak = streak_m ? streak_m : 0 
+      end
     end
     return {"day" => day_streak, "week" => week_streak, "month" => month_streak, "total" => day_streak + week_streak + month_streak }
   end
