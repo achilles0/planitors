@@ -13,7 +13,7 @@
         %td.icon= newsitem.icon && Emoji.find_by_alias(newsitem.icon) && Emoji.find_by_alias(newsitem.icon).raw
         %td= newsitem.name
         %td.extra_column= trunc(newsitem.text)
-        %td= link_to "Read", newsitem.links, target: "_blank"
+        -# %td= link_to "Read", newsitem.links, target: "_blank"
         %td= "#{distance_of_time_in_words(newsitem.created_at,Time.zone.now)} ago"
         %td= "+#{newsitem.get_up_votes.size} -#{newsitem.get_down_votes.size} = #{newsitem.get_up_votes.size-newsitem.get_down_votes.size} / #{newsitem.votes_for.size}"
         %td= link_to "👍", upvote_newsitem_path(newsitem), method: :put
