@@ -3,7 +3,7 @@
 .newsitem
   %h1= @newsitem.name
   %p= @newsitem.text
-  %h2= link_to 'View linked content', @newsitem.links, target: "_blank"
+  %h2= button_to 'View article/content', @newsitem.links, method: "get", target: "_blank"
   %hr
   = link_to "Posted by #{begin User.find(@newsitem.created_by).name ? User.find(@newsitem.created_by).name : User.find(@newsitem.created_by).email rescue '?' end}"
   %td= "#{distance_of_time_in_words(@newsitem.created_at,Time.zone.now)} ago"

@@ -10,6 +10,7 @@ class Newsitem < ApplicationRecord
   def get_interest_score(userid)
 
   	# Interest score is computed as the sum of the following:
+    # flash : 0 .. 36000, where 36000 is age 0 seconds, 3600 is age 10 secs, 0 for over ten hours
   	# age : -inf .. 100, where 100 is age 0, 90 is a day old, 60, a week old, 0 three months old
   	# vote ratio : -100 .. +100 for all down/up votes
   	# vote count : 0 .. 100, where 50 is for 20 votes, 100 for inf votes
@@ -18,6 +19,11 @@ class Newsitem < ApplicationRecord
   	# 
   	puts "==================================================================="
   	puts "Get interest score for user #{userid} post #{id}, #{name}:"
+
+    # flash
+    # 36000/(x+1)
+    age_in_secs = Time.zone.now-created_at
+    flash_score = 36000.0 / (age_in_secs + 1)
 
   	# age
   	# 200/math.log10(10.0+float(x)/day)-100
@@ -77,7 +83,7 @@ class Newsitem < ApplicationRecord
 
   	# sum
 
-  	score = age_score + vote_ratio_score + vote_count_score + tag_score
+  	score = flash_score + age_score + vote_ratio_score + vote_count_score + tag_score
 
   	puts "Total score: #{score}"
   	score

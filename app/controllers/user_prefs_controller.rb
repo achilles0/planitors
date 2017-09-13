@@ -15,7 +15,7 @@ class UserPrefsController < ApplicationController
 	if btn == '-' then interest.weight -= 1 end
 	interest.save!
   	respond_to do |format|
-      format.html { redirect_to env["HTTP_REFERER"], notice: 'Interest was successfully updated.' }
+      format.html { redirect_to env["HTTP_REFERER"] }
       format.json { render :show, status: :ok, location: @user }
     end
   end
