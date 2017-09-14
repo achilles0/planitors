@@ -9,12 +9,12 @@
   .field
     = f.label :icon
     = f.text_field :icon, :style=> 'width: 4cm'
-    = button_to "Icon Selection Guide", "https://www.emoji.codes/", method: "get", target: "_blank"
+    = link_to "Icon Selection Guide", "https://www.emoji.codes/", target: "_blank"
   .field
-    = f.label :name
+    = f.label :title
     = f.text_field :name, :style=> 'width: 50%'
   .field
-    = f.label :text
+    = f.label :text, "Text content (optional)"
     = f.text_area :text, :style=> 'width: 100%; height: 3cm'
   .field
     = f.label :tags
@@ -27,7 +27,7 @@
   -#  = f.label :relevancedays
   -#  = f.number_field :relevancedays, :style=> 'width: 4cm'
   .field
-    = f.label :links, "Link to content, if any"
+    = f.label :links, "Link to content (optional)"
     = f.text_area :links, :style=> 'width: 100%'
   %br/
   .actions
