@@ -48,7 +48,7 @@
     %p.notice= notice
     %p.alert= alert
     = yield
-    - if current_user && controller_name['missions']
+    - if false && current_user && controller_name['missions'] # FIXME: Disabled for now
       #carbon-budget
         .level-progress
           Level progress:
