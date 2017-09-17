@@ -11,6 +11,10 @@
       - streak = current_user.streak?
         %span.user #1planet &mdash; #{current_user.name ? current_user.name : current_user.email} &mdash; Score #{current_user.post_score ? current_user.post_score + streak['total'] : 0} (#{current_user.post_score ? current_user.post_score : 0} + #{streak['total']}) &mdash; Streak #{streak["month"]}/#{streak["week"]}/#{streak["day"]}
       %br
+      = link_to messages_url, class: ('active' if current_page?(messages_url)) do
+        %span.icon= Emoji.find_by_alias('postal_horn').raw
+        %span Messages
+
       = link_to newsitems_url, class: ('active' if current_page?(newsitems_url)) do
         %span.icon= Emoji.find_by_alias('eyes').raw
         %span News
@@ -61,7 +65,6 @@
           .meter
             %span{ style: "width: #{current_user.co2_budget(percentage: true)}%" }
             %span.orange.second{ style: "left: #{current_user.co2_budget(percentage: true) + 0.5}%; width: #{current_user.co2_result(percentage: true)}%" }
-        -#
           .budget-numbers
             = current_user.co2_result
             .budget-numbers-explanation

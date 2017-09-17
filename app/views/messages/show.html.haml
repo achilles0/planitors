@@ -1,0 +1,19 @@
+%p#notice= notice
+
+%p
+  %b From:
+  = @message.from_user_id
+%p
+  %b Subject:
+  = @message.subject
+%p
+  %b Text:
+  = @message.text
+%p
+  %b Sent at:
+  = @message.sent_at
+%p
+  %b Read at:
+  = @message.read_at
+
+= link_to 'Back', messages_path

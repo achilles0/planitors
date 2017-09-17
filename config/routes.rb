@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :categories
   resources :missions
   resources :accepted_missions
+  resources :messages
   resources :newsitems do
     member do
       put "upvote"#, to: "newsitems#upvote"
@@ -21,5 +22,6 @@ Rails.application.routes.draw do
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: "missions#index"
+  #root to: "missions#index"
+  root to: "messages#index"
 end
