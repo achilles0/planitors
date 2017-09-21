@@ -4,7 +4,17 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    ## @messages = Message.get_messages_for_current_user
+    ## @messages = self.get_messages_for_current_user
+    puts "MessageController::Index"
+    @messages = Message.where("to_user_id = #{current_user.id}")
+    puts "Message count #{@messages.count}"
+    if @messages.count == 0 then
+      puts "No messages, creating one"
+      Message.deliver_welcome_message current_user.id
+      @messages = Message.where("to_user_id = #{current_user.id}")
+      puts "Message count #{@messages.count}"
+    end
   end
 
   # GET /messages/1
