@@ -10,6 +10,10 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
+    if not @message.read_at then
+      @message.read_at = Time.now
+      @message.save!
+    end
   end
 
   # GET /messages/new

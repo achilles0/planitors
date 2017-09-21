@@ -10,8 +10,8 @@
     = f.label :to_user_id
     = f.number_field :to_user_id
   .field
-    = f.label :from_user_id
-    = f.number_field :from_user_id
+    =# f.label :from_user_id
+    = f.hidden_field :from_user_id, :value => current_user.id
   .field
     = f.label :subject
     = f.text_field :subject
@@ -19,9 +19,9 @@
     = f.label :text
     = f.text_field :text
   .field
-    = f.label :sent_at
-    = f.datetime_select :sent_at
-  .field
+    =# f.label :sent_at
+    = f.hidden_field :sent_at, :value => Time.now
+  -#.hidden_field
     = f.label :read_at
     = f.datetime_select :read_at
   .actions

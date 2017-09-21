@@ -1,24 +1,26 @@
-%h1 Your inbox
+%h1 Your Messages
 
 %table
   %thead
     %tr
-      %th From
-      %th Subject
-      %th Sent at
-      %th Read
-      %th 1
-      %th 2
+      -#%th From
+      -#%th Subject
+      -#%th Sent at
+      -#%th Read
+      -#%th
+      -#%th
 
   %tbody
-    - @messages.each do |message|
-      %tr
-        %td= if message.from_user_id < 10 then "Happy" else message.from_user_id end
-        %td= message.subject
-        %td= message.sent_at
-        %td= if message.read_at then "✓" else "" end
-        %td= link_to 'Show', message
-        %td= link_to 'Destroy', message, :method => :delete, :data => { :confirm => 'Are you sure?' }
+    -# @messages.each do |message|
+    - @messages.sort_by { |message| - message.sent_at.to_i }.each do |message|
+      - if message.to_user_id == current_user.id
+        %tr
+          %td= if message.from_user_id < 10 then "Happy" else message.from_user_id end
+          %td= link_to message.subject, message
+          %td= message.sent_at
+          %td= if message.read_at then "✓" else "" end
+          -#%td= link_to 'Show', message
+          -#%td= link_to 'Destroy', message, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
