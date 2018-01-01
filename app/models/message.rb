@@ -16,20 +16,20 @@ class Message < ApplicationRecord
     msg.subject = "Congratulations, new level! Welcome to level 1"
     # FIXME: where should this be stored, really?
     msg.text = <<END
-    Welcome to level 1 of #1planet!
+    Welcome to level 1 of All For Eco!
 
     This is a kind of game and meeting place for all who care about out the single planet all of us have to share. 
     The game is divided into levels, where each new level unlocks some new features of the platform. You level up
-    by accepting and completing missions. #1planet is also the place to look for news, tips and advice related to
+    by accepting and completing missions. All For Eco is also the place to look for news, tips and advice related to
     saving the climate, bio diversity (that there are many kinds of animals and life forms on the planet), the
     purity of our skies and waters, and actually all the 17 developemnt goals that United Nations have agreed on.
 
-    #1planet is still in its infancy, as you will surely realize soon. We're very happy you want to take part in
-    this journey with us, and develop a platform for a thriving community to enjoy. #1planet is developed by a
+    All For Eco is still in its infancy, as you will surely realize soon. We're very happy you want to take part in
+    this journey with us, and develop a platform for a thriving community to enjoy. All For Eco is developed by a
     not-for profit organizaton by the same name.
 
     Enjoy, and do let us know what you think!
-      /Jan Lindblad, #1planet Community Manager
+      /Jan Lindblad, All For Eco Community Manager
 END
     msg.sent_at = Time.now
     msg.save!
